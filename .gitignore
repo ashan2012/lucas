@@ -3,7 +3,6 @@
 cache/
 
 # generated material
-out/
 .proto/
 
 # python

@@ -1,0 +1,8 @@
+schema_version: 1
+module_path: zige_package
+title: 拼读卡片→田字格笔顺卡片生成器 (zige)
+scope:
+    - zige/
+source_files: []
+depends_on: []
+related_to: []

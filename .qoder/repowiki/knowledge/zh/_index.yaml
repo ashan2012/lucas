@@ -1,0 +1,29 @@
+# 知识卡导出索引文件
+schema_version: 1
+locale: zh-CN
+branch: Q0DeR-MaG1C-BrAnCh-Fo2-NoN-GiT-Or-No-C0MmIt
+nodes_managed: true
+exported_at: "2026-10-25T08:19:40Z"
+modules:
+    "":
+        dir_name: zige · 拼读卡片→田字格笔顺卡片生成器
+        title: zige · 拼读卡片→田字格笔顺卡片生成器
+        scope:
+            - requirements.txt
+            - run.sh
+            - .gitignore
+            - README.md
+        source_files: []
+        children:
+            - zige_package
+        depends_on: []
+        related_to: []
+    zige_package:
+        dir_name: 拼读卡片→田字格笔顺卡片生成器 (zige)
+        title: 拼读卡片→田字格笔顺卡片生成器 (zige)
+        scope:
+            - zige/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to: []

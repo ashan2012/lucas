@@ -1,0 +1,14 @@
+# local virtualenv and tool caches
+.venv/
+cache/
+
+# generated material
+out/
+.proto/
+
+# python
+__pycache__/
+*.py[cod]
+
+# macOS
+.DS_Store

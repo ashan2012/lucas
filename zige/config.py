@@ -32,3 +32,7 @@ GLYPH_REFERENCE_EXTENT = 900.0
 
 DEFAULT_CELL = 200
 DEFAULT_DPI_SCALE = 2
+
+# All combined PDFs are collected in one library folder next to the per-card
+# output directories, so the printable material is always in the same place.
+PDF_LIBRARY_NAME = "pdf仓库"

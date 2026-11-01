@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import List, Optional, Sequence
 
 from . import ocr, pipeline
-from .config import DEFAULT_CELL, DEFAULT_DPI_SCALE
+from .config import DEFAULT_CELL, DEFAULT_DPI_SCALE, PDF_LIBRARY_NAME
 from .layout import EmptyCardError
 from .strokes import StrokeError
 
@@ -46,6 +46,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="render from a parsed.json (use it after fixing OCR mistakes)",
     )
     parser.add_argument("-o", "--out", metavar="DIR", help="output directory (default: out/<card name>)")
+    parser.add_argument(
+        "--pdf-dir",
+        metavar="DIR",
+        help=f"where the combined PDF is filed (default: {PDF_LIBRARY_NAME}/ next to the output directory)",
+    )
     parser.add_argument("--cell", type=int, default=DEFAULT_CELL, help=f"田字格 size in px (default {DEFAULT_CELL})")
     parser.add_argument(
         "--scale",
@@ -144,8 +149,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         print(f"  ! {warning}", file=sys.stderr)
 
     out_dir = Path(args.out).expanduser() if args.out else _default_out(image, from_json)
+    pdf_dir = Path(args.pdf_dir).expanduser() if args.pdf_dir else None
     options = pipeline.BuildOptions(
         out_dir=out_dir,
+        pdf_dir=pdf_dir,
         cell=args.cell,
         scale=args.scale,
         max_cols=max(2, args.max_cols),

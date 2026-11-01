@@ -306,3 +306,20 @@ class PipelineTests(unittest.TestCase):
             self.assertTrue((out / "index.html").exists())
             self.assertEqual(result.warnings, [])
             self.assertEqual(result.missing, {})
+
+    def test_pdf_lands_in_the_shared_library_folder(self):
+        words = [layout.Word(hanzi="画画")]
+        meta = pipeline.CardMeta(title="测试卡片")
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "卡片"
+            pipeline.resolve_pinyin(words)
+            result = pipeline.build(
+                words,
+                meta,
+                pipeline.BuildOptions(out_dir=out, cell=80, scale=1, allow_network=False),
+                log=lambda msg: None,
+            )
+            library = Path(tmp) / config.PDF_LIBRARY_NAME
+            self.assertEqual(result.pdf_path, library / "测试卡片.pdf")
+            self.assertTrue(result.pdf_path.read_bytes().startswith(b"%PDF"))
+            self.assertEqual(list(out.glob("*.pdf")), [])

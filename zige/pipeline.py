@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Callable, Dict, Iterable, List, Optional, Sequence, Tuple
 
 from . import export, layout, ocr, pinyin_util
+from .config import PDF_LIBRARY_NAME
 from .draw import PageRenderer, RenderOptions, Theme
 from .layout import Word
 from .strokes import StrokeData, StrokeError, get, prefetch
@@ -26,6 +27,9 @@ class CardMeta:
 @dataclass
 class BuildOptions:
     out_dir: Path
+    # Where the combined PDF goes. Defaults to a shared library folder next to
+    # `out_dir` (out/<card>/ -> out/pdf仓库/).
+    pdf_dir: Optional[Path] = None
     cell: int = 200
     scale: int = 2
     max_cols: int = 7
@@ -258,7 +262,8 @@ def build(
     )
 
     if options.make_pdf:
-        pdf_path = out_dir / f"{export.safe_name(meta.title, 'card')}.pdf"
+        pdf_dir = Path(options.pdf_dir) if options.pdf_dir else out_dir.parent / PDF_LIBRARY_NAME
+        pdf_path = pdf_dir / f"{export.safe_name(meta.title, 'card')}.pdf"
         export.save_pdf([page.path for page in pages], pdf_path)
         result.pdf_path = pdf_path
 
